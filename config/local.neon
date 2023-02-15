@@ -1,0 +1,10 @@
+parameters:
+	google:
+		clientId: 721008029583-2jhuk9rh3o8fe2tjtj622jbsl5369fss.apps.googleusercontent.com
+		clientSecret: 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
+
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=dev.mop'
+	user: root
+	password: root

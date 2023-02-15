@@ -1,0 +1,62 @@
+{block content}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<br>
+Seřadit od: &nbsp;
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  {if $orderBy == 'price_desc'}
+  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+  <a class="btn btn-outline-primary" n:href="this $categoryId, price_desc" for="btnradio1">Nejdraššího</a>
+  {else}
+  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+  <a class="btn btn-outline-primary" n:href="this $categoryId, price_desc" for="btnradio1">Nejdraššího</a>
+  {/if}
+  {if $orderBy == 'price_asc'}
+  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked>
+  <a class="btn btn-outline-primary" n:href="this $categoryId, price_asc" for="btnradio2">Nejlevnějšího</a>
+  {else}
+  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+  <a class="btn btn-outline-primary" n:href="this $categoryId, price_asc" for="btnradio2">Nejlevnějšího</a>
+  {/if}
+  {if $orderBy == 'name_asc'}
+  <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" checked>
+  <a class="btn btn-outline-primary"  n:href="this $categoryId, name_asc" for="btnradio3">Nejnovější</a>
+  {else}
+  <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+  <a class="btn btn-outline-primary"  n:href="this $categoryId, name_asc" for="btnradio3">Nejnovější</a>
+  {/if}
+</div>
+<br>
+<br>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+{foreach $products as $product}
+<div class="col">
+          <div class="card shadow-sm">
+        <a n:href="Product:show $product->id">
+          {if $product->img}
+        <img class="bd-placeholder-img card-img-top" width="100%" height="260" src="{$basePath}/{$product->img}">
+        {else}	
+        <img class="bd-placeholder-img card-img-top" width="100%" height="260" src="{$basePath}/upload/noimg.jpg">
+        {/if}
+        </a>
+             <div class="card-body">
+              <p class="card-text h5"><strong>{$product->name}</strong></p>
+              <p class="card-text">{$product->description|truncate:50}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a class="btn btn-sm btn-outline-info" n:href="Product:show $product->id">Detail</a>
+                  {if $user->isLoggedIn()}
+                  <a class="btn btn-sm btn-outline-primary" n:href="OrderProduct! $order->id, $product->id">Přidat do košíku »</a>
+                  {/if}
+                </div>
+                <small class="text-muted">{$product->prize}$</small>
+              </div>
+            </div>
+          </div>
+        </div>
+{/foreach}
+</div>
+
+
+{/block}

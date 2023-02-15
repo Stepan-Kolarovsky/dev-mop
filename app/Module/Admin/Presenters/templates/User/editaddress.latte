@@ -1,0 +1,31 @@
+{block content}
+ <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Editace Uživatele</h1>
+
+      </div>
+      <br>
+<div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6">{if $profile->picture}<img class="img-fluid img-thumbnail card-img-top mb-5 mb-md-0" src="{$basePath}/{$profile->picture}">{else}<img class="card-img-top mb-5 mb-md-0" src="{$basePath}/upload/noimg.jpg">{/if}</div>
+                    <div class="col-md-6">
+                {if $address != null}
+                <li class="col-md-6"><strong>Země:</strong> {$address->country}</li>                
+                <li class="col-md-6"><strong>Město:</strong> {$address->city}</li>
+                <li class="col-md-6"><strong>Ulice:</strong> {$address->street}</li>
+                <li class="col-md-6"><strong>Číslo domu:</strong> {$address->house_number}</li>
+                <li class="col-md-6"><strong>PSČ:</strong> {$address->psc}</li>
+                {else}
+                <li class="col-md-6 text-danger"><strong>!! Uživatel nemá zadanou žádnou adresu !!</strong></li>
+                {/if}
+        <br>    
+                 {control editUserAddressForm}
+             <br>
+             <div class="col-md-6"><a class="btn btn-secondary" n:href="User:edit $profile->id">Zpět</a></div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+
+

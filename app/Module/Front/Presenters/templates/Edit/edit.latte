@@ -1,0 +1,27 @@
+{block content}
+
+<div class="border-bottom border-secundary">
+<h1>Upravit produkt</h1>
+</div>
+<br>
+<h2 n:block="name">{$product->name}</h2>
+<br>
+
+<div class="product">{$product->description}</div>
+<br>
+{snippet imageSnippet}
+{if $product->img}
+    <img class="img-fluid img-thumbnail showedit" src="{$basePath}/{$product->img}">
+{else}	
+ <img class="show" src="{$basePath}/upload/noimg.jpg">
+{/if}
+{/snippet}
+<br>
+<a class="ajax smzimg" n:href="deleteImage! $product->id">Smazat obrázek</a>
+<br>
+<br>
+{control productForm}
+
+
+
+

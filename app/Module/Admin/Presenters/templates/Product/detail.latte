@@ -1,0 +1,19 @@
+{block content}
+
+<div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6">{if $product->img}<img class="img-fluid img-thumbnail card-img-top mb-5 mb-md-0" src="{$basePath}/{$product->img}">{else}<img class="card-img-top mb-5 mb-md-0" src="{$basePath}/upload/noimg.jpg">{/if}</div>
+                    <div class="col-md-6">
+                        <div class="small mb-1">{$product->created_at|date:'F j, Y'}</div>
+                        <h1 class="display-5 fw-bolder">{$product->name}</h1>
+                        <div class="fs-5 mb-5">
+                            <span>{$product->prize}$</span>
+                        </div>
+                        <p class="lead">{$product->description}</p>
+
+                            <br>
+                            <br>
+                            <br>
+                            <a class="btn btn-outline-primary" n:href="OrderProduct! $order->id, $product->id">Přidat do košíku »</a> 
+
+                    </div>
+                </div>

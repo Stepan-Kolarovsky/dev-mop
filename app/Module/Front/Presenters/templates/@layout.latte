@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+  <link href="{$basePath}/css/style.css" rel="stylesheet">
+
+	<title>Home</title>
+
+	<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</head>
+
+<header class="p-3 text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a n:href="Homepage:default" class="nav-link px-2 text-secondary">Home</a></li>
+          {foreach $categories as $category}
+          <li><a n:href="Category:category $category->id" class="nav-link px-2 text-white">{$category->name}</a></li>
+          {/foreach}
+        </ul>
+      {if $user->isLoggedIn()}
+      <div class="dropdown text-end">
+        <a href="#"  class="d-block link-primary text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">Košík <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket2-fill" viewBox="0 0 16 16"><path d="M5.929 1.757a.5.5 0 1 0-.858-.514L2.217 6H.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.623l1.844 6.456A.75.75 0 0 0 3.69 15h8.622a.75.75 0 0 0 .722-.544L14.877 8h.623a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.717L10.93 1.243a.5.5 0 1 0-.858.514L12.617 6H3.383L5.93 1.757zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm4-1a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1z"></path></svg>&nbsp&nbsp</a></a></a>
+        <ul class="dropdown-menu text-small">
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+            {php $totalprize = 0}
+            
+            {foreach $orderProducts as $orderProduct}
+            <li class="dropdown-item">{$orderProduct->product->name}&nbsp | &nbsp{$orderProduct->product->prize}$&nbsp | &nbsp<span class="text-muted">{$orderProduct->product_quantity} </span>&nbsp&nbsp&nbsp&nbsp&nbsp<a class= "btn btn-outline-danger btn-small" n:href="DeleteOrderProduct! $orderProduct->product_id, $orderProduct->product_id"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/></svg></a></li>
+            {php $totalprize += $orderProduct->product->prize * $orderProduct->product_quantity}
+            {/foreach}
+            {if $totalprize == 0}
+            <li class="dropdown-item">Košík je prázdný</li>
+            {/if}
+            <hr class="dropdown-divider">
+            <li class="dropdown-item">Celkem {$totalprize}$ | <a class="btn btn-outline-secondary" n:href="Order:cart">Do Košíku</a></li>
+          </ul>
+         </div>    {/if}
+
+        <div class="text-end">
+         {if $user->isLoggedIn()}
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-primary text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        {if $user->getIdentity()->picture == null}<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="img" width="34" height="34" class="rounded-circle">
+                      {else}
+                    <img class="rounded-circle" alt="img" width="34" height="34" src="{$basePath}/{$user->getIdentity()->picture}">
+                    {/if}
+          </a>
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" n:href="User:detail">Upravit účet</a></li>
+            <li><a class="dropdown-item text-danger" n:href="Login:out">Odhlásit se <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/><path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a  n:if="$user->getIdentity()->role == admin" class="dropdown-item text-warning" n:href=":Admin:Dashboard:orders"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capslock-fill" viewBox="0 0 16 16"><path d="M7.27 1.047a1 1 0 0 1 1.46 0l6.345 6.77c.6.638.146 1.683-.73 1.683H11.5v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1H1.654C.78 9.5.326 8.455.924 7.816L7.27 1.047zM4.5 13.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1z"/></svg> Admin Panel <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capslock-fill" viewBox="0 0 16 16"><path d="M7.27 1.047a1 1 0 0 1 1.46 0l6.345 6.77c.6.638.146 1.683-.73 1.683H11.5v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1H1.654C.78 9.5.326 8.455.924 7.816L7.27 1.047zM4.5 13.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1z"/></svg></a></li>
+          </ul>
+         </div>
+         
+
+   
+
+		{else}
+        
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+     <div class="btn-group" role="group">
+       <button type="button" class="btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+       
+         Přihlásit se
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"></path>
+  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"></path>
+</svg>
+       </button>
+       <ul class="dropdown-menu">
+        <li><a class="dropdown-item" n:href="Login:in">Přihlásit se přes Google</a></li>
+          <li><a class="dropdown-item" n:href="Sign:in">Přihlásit se</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <a class="dropdown-item" n:href="Sign:up">Pokud účet nemáš zde se zaregistruj <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg></a>
+       </ul>
+       <button type="button" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket2-fill" viewBox="0 0 16 16">
+           <path d="M5.929 1.757a.5.5 0 1 0-.858-.514L2.217 6H.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.623l1.844 6.456A.75.75 0 0 0 3.69 15h8.622a.75.75 0 0 0 .722-.544L14.877 8h.623a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.717L10.93 1.243a.5.5 0 1 0-.858.514L12.617 6H3.383L5.93 1.757zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm4-1a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1z"></path>
+          </svg>
+        </button>
+    </div>
+    </div>
+        
+		{/if}
+        </div>
+      </div>
+    </div>
+  </header>
+
+<body>
+	<div class=container>
+		<div n:foreach="$flashes as $flash" n:class="alert, 'alert-' . $flash->type">{$flash->message}</div>
+
+		{include content}
+	</div>
+
+	{block scripts}
+	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+	{/block}
+</body>
+
+      <span class="mb-3 mb-md-0 text-muted footer">© 2022 Digimon, Inc</span>
+ 
+
+</div>
+
+</html>

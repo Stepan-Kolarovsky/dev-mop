@@ -1,0 +1,58 @@
+{block content}
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+<div class="row flex-lg-nowrap">
+
+
+  <div class="col">
+    <div class="row">
+      <div class="col mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="e-profile">
+              <div class="row">
+                <div class="col-12 col-sm-auto mb-3">
+                  <div class="mx-auto" style="width: 140px;">
+                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                    {if $user->getIdentity()->picture == null}<img  style="width: 140px; height: 140px;"src="{$basePath}/upload/noimg.jpg">
+                      {else}
+                    <img style="width: 140px; height: 140px;" src="{$basePath}/{$user->getIdentity()->picture}">
+                    {/if}
+                    
+                    </div>
+                  </div>
+                </div>
+                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                  <div class="text-center text-sm-left mb-2 mb-sm-0">
+                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{if $user->getIdentity()->given_name == null}
+                      {$user->getIdentity()->username}{/if}{$user->getIdentity()->given_name}&nbsp{$user->getIdentity()->family_name}</h4>
+                    <p class="mb-0">{$user->getIdentity()->username}</p>
+                  </div>
+                  <div class="text-center text-sm-right">
+                  </div>
+                </div>
+              </div>
+              <ul class="nav nav-tabs">
+                <li class="nav-item"><a n:href="User:detail" class="nav-link">Osobní informace</a></li>
+                <li class="nav-item"><a n:href="User:address" class="active nav-link">Adresa</a></li>
+                <li class="nav-item"><a n:href="User:picture" class="nav-link">Profilový Obrázek</a></li>
+
+              </ul>
+              <div class="tab-content pt-3">
+                <div class="tab-pane active">
+
+
+                    <h4>Nastavení adresy</h4>
+                    <br>
+                    {control addressForm}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+</div>

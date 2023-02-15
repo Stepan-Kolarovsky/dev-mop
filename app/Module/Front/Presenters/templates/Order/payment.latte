@@ -1,0 +1,80 @@
+{block content}
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h2>Zadejte své platební údaje</h2></div>
+<!-- košík -->
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Košík</span>
+        </h4>
+        {php $totalprize = 0}
+        {php $totalproducts = 0}
+
+        <ul class="list-group mb-4">
+        {foreach $orderProducts as $orderProduct}
+          <li class="list-group-item d-flex justify-content-between lh-sm">
+            <div>
+              <h6 class="my-0">{$orderProduct->product->name}</h6>
+              <small class="text-muted">{$orderProduct->product->description}</small>
+            </div>
+            <span class="text-muted">{$orderProduct->product->prize}$</span>
+            <span class="text-muted">{$orderProduct->product_quantity}</span>
+            <a class= "btn btn-outline-danger btn-small" n:href="DeleteOrderProduct! $orderProduct->product_id, $orderProduct->product_id"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/></svg></a>
+          </li>
+    
+        {php $totalprize += $orderProduct->product->prize * $orderProduct->product_quantity}
+        {php $totalproducts = $totalproducts + $orderProduct->product_quantity}
+        {/foreach}
+        </ul>
+        {if $totalprize == 0}
+          <div class="alert alert-danger" role="alert">
+            Košík je prázdný!
+        {else}
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Celková cena</span>
+          <strong>{$totalprize}$</strong>
+        </li>
+        <br>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Celkový počet produktů</span>
+          <strong>{$totalproducts}</strong>
+        </li>	
+        {/if}
+        </ul>
+
+      </div>
+<!-- billing -->
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Platební údaje</h4>
+        
+          <div class="row g-3">
+            <div class="col-sm-6">
+           {control paymentForm}
+            <div>
+            {if $order->payment_metod == "2"}
+              {if $card == null}
+                {control addCardForm}
+              {else}
+               {control editCardForm}
+              {/if}
+            {/if}
+            </div>
+        
+
+          <hr class="my-4">
+
+          
+
+          <a class="w-100 btn btn-primary btn-lg" n:href="order:checkout">Pokračovat na souhrn objednávky</a>
+        
+      </div>
+    </div>
+  </main>
+</div>
+
+
+    <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+      <script src="form-validation.js"></script>
