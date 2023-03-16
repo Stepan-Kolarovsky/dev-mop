@@ -20,14 +20,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 		$this->facade = $facade;
 		$this->orderFacade = $orderFacade;
 	}
-	public function startup(): void
-	{
-		parent::startup();
-	
-		if (!$this->getUser()->isLoggedIn()) {
-			$this->redirect(':Front:Homepage:');
-		}
-	}
+
 
 	public function renderUp(): void
 	{
