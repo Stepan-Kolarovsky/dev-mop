@@ -170,4 +170,24 @@ final class OrderFacade
 			->order('created_at DESC');
 		return $orderId;
 	}
+
+
+
+
+
+
+	public function findPublishedOrders(): Nette\Database\Table\Selection
+	{
+		return
+            $this->database->table('orders')
+			->where('created_at < ', new \DateTime)
+			->order('created_at DESC');
+	}
+
+
+
+
+
+
+	
 }

@@ -24,13 +24,6 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 		$this->userFacade = $userFacade;
 		$this->orderfacade = $orderfacade;
 	}
-	public function renderDefault(): void
-	{
-		$this->template->refreshNumber = rand(1, 55);
-		$this->template->products = $this->facade
-			->getPublicProducts()
-			->limit(5);
-	}
 	public function renderproducts(): void
 	{
 		$this->template->products = $this->facade
@@ -41,10 +34,23 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 	{
 		$this->template->profiles = $this->userFacade->getAll();
 	}
-	public function renderorders(): void
+
+
+
+	
+	public function renderorders(int $page = 1): void
 	{
-		$this->template->orders = $this->orderfacade->getAll();
+		$orders = $this->orderfacade->findPublishedOrders();
+		$lastPage = 0;
+		$this->template->orders = $orders->page($page, 5, $lastPage);
+		
+		$this->template->lastPage = $lastPage;
+		$this->template->page = $page;
 	}
+
+
+
+
 	public function renderopenorders(): void
 	{
 		$this->template->orders = $this->orderfacade->getAll();

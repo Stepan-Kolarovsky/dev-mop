@@ -41,7 +41,21 @@
            
           </tbody>
         </table>
-        
+        <div class="pagination">
+	      	  Stránka {$page} z {$lastPage} 
+          {if $page > 1}
+  	         &nbsp;|&nbsp;
+		        <a n:href="orders, 1">První</a>
+		          &nbsp;|&nbsp;
+		        <a n:href="orders, $page - 1">Předchozí</a>
+	        {/if}
+	        {if $page < $lastPage}
+		          &nbsp;|&nbsp;
+		        <a n:href="orders, $page + 1">Další</a>
+		          &nbsp;|&nbsp;
+		        <a n:href="orders, $lastPage">Poslední</a>
+	        {/if}
+        </div>
       </div>
       <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="845" height="356" style="display: block; height: 285px; width: 676px;"></canvas>
 

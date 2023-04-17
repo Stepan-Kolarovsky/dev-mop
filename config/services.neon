@@ -1,5 +1,6 @@
 services:
 
+	- App\Model\OrderRepository
 	- App\Model\UserFacade
 	- App\Model\ProductFacade
 	- App\Model\OrderFacade
