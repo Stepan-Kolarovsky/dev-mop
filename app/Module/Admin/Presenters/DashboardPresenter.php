@@ -24,12 +24,17 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 		$this->userFacade = $userFacade;
 		$this->orderfacade = $orderfacade;
 	}
-	public function renderproducts(): void
+	
+	public function renderproducts(int $page = 1): void
 	{
-		$this->template->products = $this->facade
-			->getPublicProducts()
-			->limit(99);
+		$products = $this->facade->findPublishedProducts();
+		$lastPage = 0;
+		$this->template->products = $products->page($page, 5, $lastPage);
+		
+		$this->template->lastPage = $lastPage;
+		$this->template->page = $page;
 	}
+
 	public function rendercustomers(): void
 	{
 		$this->template->profiles = $this->userFacade->getAll();
@@ -48,17 +53,26 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 		$this->template->page = $page;
 	}
 
-
-
-
-	public function renderopenorders(): void
+	public function renderopenorders(int $page = 1): void
 	{
-		$this->template->orders = $this->orderfacade->getAll();
+		$orders = $this->orderfacade->findPublishedOpenOrders();
+		$lastPage = 0;
+		$this->template->orders = $orders->page($page, 5, $lastPage);
+		
+		$this->template->lastPage = $lastPage;
+		$this->template->page = $page;
 	}
-	public function renderclosedorders(): void
+
+	public function renderclosedorders(int $page = 1): void
 	{
-		$this->template->orders = $this->orderfacade->getAll();
+		$orders = $this->orderfacade->findPublishedClosedOrders();
+		$lastPage = 0;
+		$this->template->orders = $orders->page($page, 5, $lastPage);
+		
+		$this->template->lastPage = $lastPage;
+		$this->template->page = $page;
 	}
+
 	public function rendercategories(): void
 	{
 		$this->template->categories = $this->facade->getAllCategories();

@@ -43,7 +43,23 @@
            
           </tbody>
         </table>
-        
+        <div class="pagination footer">
+          {if $page > 1}
+  	         <div class="btn-group" role="group" aria-label="Basic example">
+		        <a n:href="openorders, 1" class="btn btn-outline-info btn-sm">První</a>
+            <button type="button" class="btn btn-outline-info" disabled>Stránka {$page} z {$lastPage}</button>
+		        <a n:href="openorders, $page - 1" class="btn btn-outline-info btn-sm">Předchozí</a>
+            </div>
+	        {/if}
+	        {if $page < $lastPage}
+             <div class="btn-group" role="group" aria-label="Basic example">
+		        <a n:href="openorders, $page + 1" class="btn btn-outline-info btn-sm">Další</a>
+            <button type="button" class="btn btn-outline-info" disabled>Stránka {$page} z {$lastPage}</button>
+		        <a n:href="openorders, $lastPage" class="btn btn-outline-info btn-sm">Poslední</a>
+             </div>
+	        {/if}
+
+        </div>
       </div>
       <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="845" height="356" style="display: block; height: 285px; width: 676px;"></canvas>
 

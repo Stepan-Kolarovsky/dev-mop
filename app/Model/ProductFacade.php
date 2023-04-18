@@ -22,6 +22,14 @@ final class ProductFacade
 			->where('created_at < ', new \DateTime)
 			->order('created_at DESC');
 	}
+	public function findPublishedProducts(): Nette\Database\Table\Selection
+	{
+		return
+            $this->database->table('products')
+				->where('created_at < ', new \DateTime)
+				->order('created_at DESC');
+	}
+
 	public function getProductById(int $productId)
 	{
 		$product = $this->database
