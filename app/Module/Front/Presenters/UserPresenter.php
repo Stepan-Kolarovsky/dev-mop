@@ -24,7 +24,7 @@ final class UserPresenter extends Nette\Application\UI\Presenter
     public function startup(): void
     {
         parent::startup();
-    
+
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect(':Front:Homepage:');
         }

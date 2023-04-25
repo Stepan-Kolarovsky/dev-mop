@@ -24,15 +24,19 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 		$this->userFacade = $userFacade;
 		$this->orderfacade = $orderfacade;
 	}
-	
+
 	public function renderproducts(int $page = 1): void
 	{
 		$products = $this->facade->findPublishedProducts();
 		$lastPage = 0;
 		$this->template->products = $products->page($page, 5, $lastPage);
-		
+
 		$this->template->lastPage = $lastPage;
 		$this->template->page = $page;
+
+		if (!$this->user->getIdentity()->role == "admin") {
+			$this->redirect(':Front:Homepage:');
+		}
 	}
 
 	public function rendercustomers(): void
@@ -42,13 +46,13 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 
 
 
-	
+
 	public function renderorders(int $page = 1): void
 	{
 		$orders = $this->orderfacade->findPublishedOrders();
 		$lastPage = 0;
 		$this->template->orders = $orders->page($page, 5, $lastPage);
-		
+
 		$this->template->lastPage = $lastPage;
 		$this->template->page = $page;
 	}
@@ -58,7 +62,7 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 		$orders = $this->orderfacade->findPublishedOpenOrders();
 		$lastPage = 0;
 		$this->template->orders = $orders->page($page, 5, $lastPage);
-		
+
 		$this->template->lastPage = $lastPage;
 		$this->template->page = $page;
 	}
@@ -68,7 +72,7 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 		$orders = $this->orderfacade->findPublishedClosedOrders();
 		$lastPage = 0;
 		$this->template->orders = $orders->page($page, 5, $lastPage);
-		
+
 		$this->template->lastPage = $lastPage;
 		$this->template->page = $page;
 	}
@@ -100,8 +104,11 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 	public function startup(): void
 	{
 		parent::startup();
-	
+
 		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect(':Front:Homepage:');
+		}
+		if ($this->getUser()->getIdentity()->role != "admin") {
 			$this->redirect(':Front:Homepage:');
 		}
 	}

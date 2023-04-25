@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Module\admin\Presenters;
 
 use League\OAuth2\Client\Provider\Google;
@@ -11,13 +12,13 @@ class LoginPresenter extends Presenter
 	/** @var Google */
 	private $google;
 
-    private $userRepository;
+	private $userRepository;
 
-    public function __construct(Google $google, GoogleUserFacade $userRepository)
-    {
-        $this->userRepository = $userRepository;
-        $this->google = $google;
-    }
+	public function __construct(Google $google, GoogleUserFacade $userRepository)
+	{
+		$this->userRepository = $userRepository;
+		$this->google = $google;
+	}
 
 	public function handleGoogleLogin(): void
 	{
@@ -40,7 +41,7 @@ class LoginPresenter extends Presenter
 
 		$state = $this->getParameter('state');
 		$stateInSession = $this->getSession(Google::class)->state;
-		if ($state === null || $stateInSession === null || ! \hash_equals($stateInSession, $state)) {
+		if ($state === null || $stateInSession === null || !\hash_equals($stateInSession, $state)) {
 			$this->flashMessage('... invalid CSRF token ...', 'error');
 			$this->redirect('Sign:in');
 		}
@@ -88,7 +89,7 @@ class LoginPresenter extends Presenter
 	public function startup(): void
 	{
 		parent::startup();
-	
+
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect(':Front:Homepage:');
 		}

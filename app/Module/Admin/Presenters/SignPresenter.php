@@ -21,8 +21,8 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 	private Forms\SignUpFormFactory $signUpFactory;
 
 	private Google $google;
-	
-    private GoogleUserFacade $googleUserFacade;
+
+	private GoogleUserFacade $googleUserFacade;
 
 
 	public function __construct(Forms\SignInFormFactory $signInFactory, Forms\SignUpFormFactory $signUpFactory)
@@ -62,7 +62,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 	public function startup(): void
 	{
 		parent::startup();
-	
+
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect(':Front:Homepage:');
 		}

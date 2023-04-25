@@ -23,7 +23,7 @@ final class EditPresenter extends BasePresenter
 	public function startup(): void
 	{
 		parent::startup();
-	
+
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect(':Front:Homepage:');
 		}
@@ -107,5 +107,4 @@ final class EditPresenter extends BasePresenter
 
 		$this->template->product = $product;
 	}
-
 }

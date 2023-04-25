@@ -26,7 +26,7 @@ final class OrderPresenter extends BasePresenter
 	public function startup(): void
 	{
 		parent::startup();
-	
+
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect(':Front:Homepage:');
 		}
@@ -161,20 +161,20 @@ final class OrderPresenter extends BasePresenter
 
 	protected function createComponentPaymentForm(): Form
 	{
-		if($this->orderFacade->getUserOpenOrderId($this->user->getIdentity()->getId())->fetch()->payment_metod == null){
-		$form = new Form;
-		$form->addRadioList('payment_metod', 'Způsob platby:', [
-			'1' => 'Dobírka',
-			'2' => 'Kartou',
-		])
-			->setRequired('Vyberte způsob platby');
-		$form->addSubmit('send', 'Uložit');
-		$form->setMethod('POST');
-		$form->onSuccess[] = [$this, 'paymentFormSucceeded'];
+		if ($this->orderFacade->getUserOpenOrderId($this->user->getIdentity()->getId())->fetch()->payment_metod == null) {
+			$form = new Form;
+			$form->addRadioList('payment_metod', 'Způsob platby:', [
+				'1' => 'Dobírka',
+				'2' => 'Kartou',
+			])
+				->setRequired('Vyberte způsob platby');
+			$form->addSubmit('send', 'Uložit');
+			$form->setMethod('POST');
+			$form->onSuccess[] = [$this, 'paymentFormSucceeded'];
 
-		return $form;
-		}else
-		$form = new Form;
+			return $form;
+		} else
+			$form = new Form;
 		$form->addRadioList('payment_metod', 'Způsob platby:', [
 			'1' => 'Dobírka',
 			'2' => 'Kartou',

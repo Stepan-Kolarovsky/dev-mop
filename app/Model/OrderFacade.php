@@ -179,14 +179,14 @@ final class OrderFacade
 	public function findPublishedOrders(): Nette\Database\Table\Selection
 	{
 		return
-            $this->database->table('orders')
+			$this->database->table('orders')
 			->where('created_at < ', new \DateTime)
 			->order('created_at DESC');
 	}
 	public function findPublishedOpenOrders(): Nette\Database\Table\Selection
 	{
 		return
-            $this->database->table('orders')
+			$this->database->table('orders')
 			->where('created_at < ', new \DateTime)
 			->where('is_finished', 0)
 			->order('created_at DESC');
@@ -194,15 +194,9 @@ final class OrderFacade
 	public function findPublishedClosedOrders(): Nette\Database\Table\Selection
 	{
 		return
-            $this->database->table('orders')
+			$this->database->table('orders')
 			->where('created_at < ', new \DateTime)
 			->where('is_finished', 1)
 			->order('created_at DESC');
 	}
-
-
-
-
-
-	
 }

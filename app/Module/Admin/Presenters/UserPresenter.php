@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Module\Admin\Presenters;
 
 use Nette;
@@ -15,18 +16,18 @@ final class UserPresenter extends Nette\Application\UI\Presenter
         $this->userFacade = $userFacade;
     }
 
-     public function renderDetail(int $id)
+    public function renderDetail(int $id)
     {
         $this->template->profiles = $this->userFacade->getUserById($id)[$id];
     }
     public function startup(): void
-	{
-		parent::startup();
-	
-		if (!$this->getUser()->isLoggedIn()) {
-			$this->redirect(':Front:Homepage:');
-		}
-	}
+    {
+        parent::startup();
+
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect(':Front:Homepage:');
+        }
+    }
     public function renderEdit(int $profileid)
     {
         $this->template->profile = $this->userFacade->getUserById($profileid)[$profileid];
@@ -40,10 +41,7 @@ final class UserPresenter extends Nette\Application\UI\Presenter
         $this->template->profile = $this->userFacade->getUserById($profileid)[$profileid];
         $profile = $this->template->profile;
         $this->getComponent('editUserLoginForm')
-		->setDefaults($profile->toArray());
-
-
-
+            ->setDefaults($profile->toArray());
     }
     public function renderEditaddress(int $profileid)
     {
@@ -67,7 +65,7 @@ final class UserPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Uživatelská data byla úspěšně změněna.');
         $this->redirect('User:detail', $values->profileid);
     }
-    
+
     protected function createComponentEditUserAddressForm(): Form
     {
         $form = new Form;
@@ -81,7 +79,7 @@ final class UserPresenter extends Nette\Application\UI\Presenter
     }
     public function editUserAddressFormSucceeded(Form $form, \stdClass $values): void
     {
-        
+
         if ($this->userFacade->getAddressIdbyUserId($this->template->profile)->fetch() == null) {
             $addressId = $this->userFacade->getAddressIdbyUserId($this->template->profile)->fetch()->id;
             $this->userFacade->addAddress($addressId, $values);
@@ -106,5 +104,4 @@ final class UserPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Uživatelská data byla úspěšně změněna.');
         $this->redirect('Dashbord:Customers');
     }
-
 }

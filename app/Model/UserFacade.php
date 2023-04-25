@@ -207,14 +207,6 @@ final class UserFacade implements Nette\Security\Authenticator
 			'password' => $this->passwords->hash($data->password),
 		]);
 	}
-
-
-
-
-
-
-
-
 }
 
 class DuplicateNameException extends \Exception

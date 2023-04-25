@@ -25,9 +25,9 @@ final class ProductFacade
 	public function findPublishedProducts(): Nette\Database\Table\Selection
 	{
 		return
-            $this->database->table('products')
-				->where('created_at < ', new \DateTime)
-				->order('created_at DESC');
+			$this->database->table('products')
+			->where('created_at < ', new \DateTime)
+			->order('created_at DESC');
 	}
 
 	public function getProductById(int $productId)
@@ -77,13 +77,13 @@ final class ProductFacade
 		if ($orderBy == "default") {
 			return $products
 				->order('created_at DESC');
-		} elseif($orderBy == "price_asc") {
+		} elseif ($orderBy == "price_asc") {
 			return $products
 				->order('prize ASC');
-		} elseif($orderBy == "price_desc") {
+		} elseif ($orderBy == "price_desc") {
 			return $products
 				->order('prize DESC');
-		} elseif($orderBy == "name_asc") {
+		} elseif ($orderBy == "name_asc") {
 			return $products
 				->order('name ASC');
 		}

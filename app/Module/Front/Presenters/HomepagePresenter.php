@@ -26,8 +26,8 @@ final class HomepagePresenter extends BasePresenter
 
 	public function renderDefault(): void
 	{
-		
-		
+
+
 		$this->template->refreshNumber = rand(1, 55);
 		$this->template->products = $this->facade
 			->getPublicProducts()

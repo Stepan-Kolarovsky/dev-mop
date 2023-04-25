@@ -22,12 +22,12 @@ final class ProductPresenter extends BasePresenter
 	public function startup(): void
 	{
 		parent::startup();
-	
+
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect(':Front:Homepage:');
 		}
 	}
-    public function renderShow(int $productId): void
+	public function renderShow(int $productId): void
 	{
 
 		$product = $this->facade->getproductbyID($productId);
@@ -50,8 +50,7 @@ final class ProductPresenter extends BasePresenter
 	{
 		if ($this->orderFacade->getOrderProductByUserId($orderId)->fetch() == null or $this->orderFacade->getOrderProductByProductId($productId)->fetch() == null && $this->orderFacade->getOrderByUserId($this->user->getIdentity()->getId())->fetch()->is_finished == 0) {
 			$this->orderFacade->insertOrderProducts($orderId, $productId);
-		}
-		else{
+		} else {
 			$this->orderFacade->getOrderProductByProductId($productId)->update([
 				'product_quantity' => $this->orderFacade->getOrderProductByProductId($productId)->fetch()->product_quantity + 1,
 			]);
@@ -67,7 +66,4 @@ final class ProductPresenter extends BasePresenter
 		$this->flashMessage('produkt odebrán z košíku');
 		$this->redirect('Product:show', $productId);
 	}
-
-	
-    
 }
