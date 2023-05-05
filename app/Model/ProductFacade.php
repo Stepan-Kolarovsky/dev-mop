@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette;
+use Nette\Database\Table\Selection;
 
 final class ProductFacade
 {
@@ -15,7 +16,7 @@ final class ProductFacade
 		$this->database = $database;
 	}
 
-	public function getPublicProducts()
+	public function getPublicProducts(): Selection
 	{
 		return $this->database
 			->table('products')
