@@ -153,6 +153,10 @@ final class OrderFacade
 	{
 		$this->database->table('orders')->where('id', $orderId)->update(['completed' => 1]);
 	}
+	public function uncompleteOrder(int $orderId)
+	{
+		$this->database->table('orders')->where('id', $orderId)->update(['completed' => 0]);
+	}
 	public function deleteOrderProducts(int $orderId)
 	{
 		$this->database->table('order_products')->where('order_id', $orderId)->delete();

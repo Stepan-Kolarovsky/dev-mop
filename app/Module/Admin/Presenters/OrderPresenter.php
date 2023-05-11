@@ -250,6 +250,13 @@ final class OrderPresenter extends BasePresenter
 		$this->redirect('Dashboard:orders');
 	}
 
+	public function handleUnCompleteOrder(int $orderId): void
+	{
+		$this->orderFacade->unCompleteOrder($orderId);
+		$this->flashMessage('Objednávka byla Potvrzena.', 'success');
+		$this->redirect('Dashboard:orders');
+	}
+
 	public function handleDeleteOrder(int $orderId): void
 	{
 		$this->orderFacade->deleteOrderProducts($orderId);

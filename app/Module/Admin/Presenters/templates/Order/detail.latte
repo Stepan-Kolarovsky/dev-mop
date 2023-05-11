@@ -116,7 +116,10 @@
             <tr>
                 <td>{$totalprize}</td>
                 <td>{$totalproducts}</td>
-                <td><a class="btn btn-outline-danger" n:href="deleteOrder!">Odstranit objednávku</a>   <a class="btn btn-outline-success" n:href="completeOrder!">Označit jako vyřízenou</a></td>
+                <td><a class="btn btn-outline-danger" n:href="deleteOrder!">Odstranit objednávku</a>   
+                {if $order->completed == 1}
+                <a class="btn btn-outline-danger" n:href="unCompleteOrder!">Označit jako nevyřízenou</a></td>
+                {else}<a class="btn btn-outline-success" n:href="completeOrder!">Označit jako vyřízenou</a></td>{/if}
             </tr>
            
           </tbody>
