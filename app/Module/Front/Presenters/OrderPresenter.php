@@ -105,7 +105,7 @@ final class OrderPresenter extends BasePresenter
 			$form->addText('zip', 'PSČ:')
 				->setDefaultValue($this->userFacade->getAddressByUserId($this->user->getIdentity()->getId())->fetch()->psc)
 				->setRequired('Zadejte PSČ');
-			$form->addSubmit('send', 'Uložit');
+			$form->addSubmit('send', 'Nastavit');
 			$form->onSuccess[] = [$this, 'editAddressFormSucceeded'];
 
 			return $form;
@@ -120,15 +120,14 @@ final class OrderPresenter extends BasePresenter
 			->setRequired('Zadejte číslo domu');
 		$form->addText('zip', 'PSČ:')
 			->setRequired('Zadejte PSČ');
-		$form->addSubmit('send', 'Uložit');
+		$form->addSubmit('send', 'Nastavit');
 		$form->onSuccess[] = [$this, 'editAddressFormSucceeded'];
 
 		return $form;
 	}
 	public function editAddressFormSucceeded($form, $data): void
 	{
-		$addressId = $this->user->getIdentity()->getId()->fetch()->address_id;
-		$this->userFacade->editUser($addressId, $data);
+		$this->orderFacade->createOrderAddress($this->orderFacade->getUserOpenOrderId($this->user->getIdentity()->getId()), $this->user->getIdentity()->getId(), $data);
 		$this->flashMessage('Adresa byla Změněna.', 'success');
 		$this->redirect('Order:address');
 	}

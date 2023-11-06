@@ -48,7 +48,7 @@ final class DashboardPresenter extends Nette\Application\UI\Presenter
 
 
 	public function renderorders(int $page = 1): void
-	{
+	{0
 		$orders = $this->orderfacade->findPublishedOrders();
 		$lastPage = 0;
 		$this->template->orders = $orders->page($page, 5, $lastPage);

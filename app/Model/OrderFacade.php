@@ -203,4 +203,15 @@ final class OrderFacade
 			->where('is_finished', 1)
 			->order('created_at DESC');
 	}
+	public function createOrderAddress($orderId, $userId, $data)
+	{
+		$this->database->table('order_address')->insert([
+			'order_id' => $orderId,
+			'user_id' => $userId,
+			'city' => $data['city'],
+			'street' => $data['street'],
+			'house_number' => $data['house_number'],
+			'psc' => $data['zip'],
+		]);
+	}
 }
